@@ -178,11 +178,11 @@ closeHandler impl ev = do
     isUnsubscribe _ = false
 
     updateSubscriptions :: Orders a -> Orders a
-    updateSubscriptions subs = subs --let
-        --  forRemoval = map fst <<< List.filter (isUnsubscribe <<< view (_2 <<< req)) $ List.fromFoldable subs
-        --  cleanedSubs = foldl (flip StrMap.delete) subs forRemoval
-        --in
-          --map ( _ { state = Ordered } ) cleanedSubs
+    updateSubscriptions subs = let
+          forRemoval = map fst <<< List.filter (isUnsubscribe <<< view (_2 <<< req)) <<< StrMap.toUnfoldable $ subs
+          cleanedSubs = foldl (flip StrMap.delete) subs forRemoval
+        in
+          map ( _ { state = Ordered } ) cleanedSubs
 
 errorHandler :: forall eff a. Connection eff a -> Event -> SubscriberEff eff Unit
 errorHandler impl ev =

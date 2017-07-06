@@ -21,7 +21,6 @@ import Data.List as List
 import Data.StrMap as StrMap
 import Data.StrMap.ST as SM
 import WebSocket as WS
-import Control.Bind ((<=<))
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Ref (modifyRef, readRef, writeRef, newRef)
 import Control.Monad.ST (ST)
