@@ -9,6 +9,7 @@ module Servant.Subscriber.Subscriptions (
 import Prelude
 
 import Data.StrMap as StrMap
+import Data.List as List
 import Data.StrMap.ST as SM
 import Control.Monad.Eff (Eff)
 import Control.Monad.ST (ST)
@@ -31,10 +32,10 @@ makeSubscriptions req' parser = Subscriptions $ StrMap.singleton (gShow req')
     }
 
 toList :: forall a. Subscriptions a -> List (Subscription a)
-toList (Subscriptions a) = StrMap.values $ a
+toList (Subscriptions a) = (List.fromFoldable <<< StrMap.values) $ a
 
 -- | Number of subscriptions
-size :: forall a. Subscriptions a -> Number
+size :: forall a. Subscriptions a -> Int
 size (Subscriptions m) = StrMap.size m
 
 mergeParsers :: forall a. Subscription a -> Subscription a -> Subscription a
