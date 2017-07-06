@@ -31,7 +31,7 @@ makeSubscriptions req' parser = Subscriptions $ StrMap.singleton (gShow req')
     }
 
 toList :: forall a. Subscriptions a -> List (Subscription a)
-toList (Subscriptions a) = StrMap.values a
+toList (Subscriptions a) = StrMap.values $ a
 
 -- | Number of subscriptions
 size :: forall a. Subscriptions a -> Number
